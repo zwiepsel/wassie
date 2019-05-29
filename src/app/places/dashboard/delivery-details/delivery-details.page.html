@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aflevergegevens</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-list-header>Aflever order #1234 -  27/04/2019</ion-list-header>
+    <ion-item>
+      <ion-label position="floating">Verwachte aflevertijd</ion-label>
+      <ion-input>11:00-13:00</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Aantallen</ion-label>
+      <ion-input>50</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Lakens</ion-label>
+      <ion-input>30</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Slopen</ion-label>
+      <ion-input>10</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Hoezen</ion-label>
+      <ion-input>10</ion-input>
+    </ion-item>
+    <ion-item>
+
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-6>
+          <ion-button size="medium" (click)="login()" expand="block">Factuur inzien</ion-button>
+        </ion-col>
+        <ion-col col-6>
+          <ion-button size="medium" (click)="requestRMA()" expand="block">RMA Aanvragen</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+
+  </ion-list>
+</ion-content>

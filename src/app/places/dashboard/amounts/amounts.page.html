@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Aantallen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-segment (ionChange)="onFilterUpdate($event)">
+      <ion-segment-button value="search" checked>Op naam</ion-segment-button>
+      <ion-segment-button value="category">Op categorie</ion-segment-button>
+    </ion-segment>
+
+  </ion-list>
+  <div *ngIf="this.search">
+    <ion-searchbar (ionInput)="getItems($event)" [(ngModel)]="searchTerm" placeholder="zoeken" autocomplete animated></ion-searchbar>
+    <ion-list>
+      <ion-list-header color="primary">   <span text-left>Product</span>
+        <span text-right class="amount-header-right">Aantal</span></ion-list-header> 
+      <ion-item *ngFor="let item of filteredItems">
+              <ion-label color="black">{{item.product}}</ion-label>
+              <ion-input type="number" text-right placeholder="0" [(ngModel)]="item.amount"></ion-input>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div *ngIf="!this.search && !filterActive">
+    <ion-card class="card-shadow" (click)="filterCategorie('Bovenkleding')">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/shirt.jpg" alt="Image" />
+
+        <div class="card-title">Bovenkleding</div>
+        <div class="card-subtitle">Overhemd, T-shirt, Broek, etc.</div>
+      </figure>
+    </ion-card>
+    <ion-card class="card-shadow">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/badgoed.jpg" alt="Image" />
+
+        <div class="card-title">Badgoed</div>
+        <div class="card-subtitle">Handdoek, Washand, Badmat, etc.</div>
+      </figure>
+    </ion-card>
+    <ion-card class="card-shadow">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/bedgoed.jpg" alt="Image" />
+
+        <div class="card-title">Bedgoed</div>
+        <div class="card-subtitle">Dekbed, Overtrek, Hoeslaken, etc.</div>
+      </figure>
+    </ion-card>
+    <ion-card class="card-shadow">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/keukengoed.jpg" alt="Image" />
+        <div class="card-title">keukengoed</div>
+        <div class="card-subtitle">Tafellaken, Server, Theedoek, etc.</div>
+      </figure>
+    </ion-card>
+    <ion-card class="card-shadow">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/schoonmaak.jpg" alt="Image" />
+
+        <div class="card-title">Schoonmaak</div>
+        <div class="card-subtitle">Microvezeldoek, Dweil, etc.</div>
+      </figure>
+    </ion-card>
+    <ion-card class="card-shadow">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/lijfgoed.jpg" alt="Image" />
+        <div class="card-title">Lijfgoed</div>
+        <div class="card-subtitle">Ondergoed, Pyama, Sokken, etc.</div>
+      </figure>
+    </ion-card>
+    <ion-card class="card-shadow">
+      <figure class="card-caption">
+        <img class="demo" src="../../../../assets/img/overig.jpg" alt="Image" />
+        <div class="card-title">Overig</div>
+        <div class="card-subtitle">Gordijnen, Waszak, Zakdoek, etc.</div>
+      </figure>
+    </ion-card>
+  </div>
+  <div *ngIf="!this.search && this.filterActive">
+      <div>
+        
+      </div>
+      <ion-list>
+          <ion-list-header color="primary">   <span text-left>Product</span>
+            <span text-right class="amount-header-right">Aantal</span></ion-list-header> 
+          <ion-item *ngFor="let item of filteredItems">
+                  <ion-label color="black">{{item.product}}</ion-label>
+                  <ion-input type="number" text-right placeholder="0" [(ngModel)]="item.amount"></ion-input>
+          </ion-item>
+        </ion-list>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-3></ion-col>
+      <ion-col col-6>
+        <ion-button size="medium" (click)='saveAmount()' expand="block">Voltooien</ion-button>
+      </ion-col>
+      <ion-col col-3></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
