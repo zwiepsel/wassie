@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Aantallen</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
@@ -33,7 +37,7 @@
         <div class="card-subtitle">Overhemd, T-shirt, Broek, etc.</div>
       </figure>
     </ion-card>
-    <ion-card class="card-shadow">
+    <ion-card class="card-shadow" (click)="filterCategorie('Badgoed')">
       <figure class="card-caption">
         <img class="demo" src="../../../../assets/img/badgoed.jpg" alt="Image" />
 
@@ -41,7 +45,7 @@
         <div class="card-subtitle">Handdoek, Washand, Badmat, etc.</div>
       </figure>
     </ion-card>
-    <ion-card class="card-shadow">
+    <ion-card class="card-shadow" (click)="filterCategorie('Bedgoed')">
       <figure class="card-caption">
         <img class="demo" src="../../../../assets/img/bedgoed.jpg" alt="Image" />
 
@@ -49,14 +53,14 @@
         <div class="card-subtitle">Dekbed, Overtrek, Hoeslaken, etc.</div>
       </figure>
     </ion-card>
-    <ion-card class="card-shadow">
+    <ion-card class="card-shadow" (click)="filterCategorie('Keukengoed')">
       <figure class="card-caption">
         <img class="demo" src="../../../../assets/img/keukengoed.jpg" alt="Image" />
         <div class="card-title">keukengoed</div>
         <div class="card-subtitle">Tafellaken, Server, Theedoek, etc.</div>
       </figure>
     </ion-card>
-    <ion-card class="card-shadow">
+    <ion-card class="card-shadow" (click)="filterCategorie('Schoonmaak')">
       <figure class="card-caption">
         <img class="demo" src="../../../../assets/img/schoonmaak.jpg" alt="Image" />
 
@@ -64,14 +68,14 @@
         <div class="card-subtitle">Microvezeldoek, Dweil, etc.</div>
       </figure>
     </ion-card>
-    <ion-card class="card-shadow">
+    <ion-card class="card-shadow" (click)="filterCategorie('Lijfgoed')">
       <figure class="card-caption">
         <img class="demo" src="../../../../assets/img/lijfgoed.jpg" alt="Image" />
         <div class="card-title">Lijfgoed</div>
         <div class="card-subtitle">Ondergoed, Pyama, Sokken, etc.</div>
       </figure>
     </ion-card>
-    <ion-card class="card-shadow">
+    <ion-card class="card-shadow" (click)="filterCategorie('Overig')">
       <figure class="card-caption">
         <img class="demo" src="../../../../assets/img/overig.jpg" alt="Image" />
         <div class="card-title">Overig</div>
@@ -80,8 +84,21 @@
     </ion-card>
   </div>
   <div *ngIf="!this.search && this.filterActive">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <div>
+            <ion-button (click)="chooseCategorie()"><ion-icon name="arrow-round-back"></ion-icon>terug</ion-button>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="categorie-header">
+            <label>{{activeCategorie}}</label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
       <div>
-        
       </div>
       <ion-list>
           <ion-list-header color="primary">   <span text-left>Product</span>
@@ -95,7 +112,9 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col col-3></ion-col>
+      <ion-col col-3>
+        <ion-button (click)="chooseCategorie()"><ion-icon name="arrow-round-back"></ion-icon>terug</ion-button>
+      </ion-col>
       <ion-col col-6>
         <ion-button size="medium" (click)='saveAmount()' expand="block">Voltooien</ion-button>
       </ion-col>

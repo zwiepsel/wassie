@@ -2,9 +2,6 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      <!-- <ion-button (click)="onOpenMenu()">
-        Open
-      </ion-button> -->
     </ion-buttons>
     <ion-title>Dashboard</ion-title>
   </ion-toolbar>
@@ -32,18 +29,29 @@
                 </ion-item>
                 <ion-item>
                   <ion-label>Type</ion-label>
-                  <ion-select value="Kilo" okText="Ok" cancelText="Sluiten">
-                    <ion-select-option value="Kilo">Kilo</ion-select-option>
+                  <ion-select value="Pieces" (ionChange)="changeType()" formControlName="type" okText="Ok" cancelText="Sluiten">
                     <ion-select-option value="Pieces">Stuks</ion-select-option>
+                    <ion-select-option value="Kilo">Kilo</ion-select-option>
+                    <ion-select-option value="Bags">Waszakken</ion-select-option>
                   </ion-select>
                 </ion-item>
-                <ion-item>
+                <ion-item *ngIf="!hideAmounts">
                   <ion-label>
                     <h2>Aantallen</h2>
                     <p>kies de aantallen die u wilt laten ophalen </p>
                   </ion-label>
                   <ion-button (click)="chooseAmounts()"  fill="outline" slot="end">Kies</ion-button>
                 </ion-item>
+                <ion-item *ngIf="hideAmounts">
+                  <ion-label color="black">Aantal kilo's</ion-label>
+                  <ion-input type="number" text-right placeholder="0"></ion-input>
+                </ion-item>
+                <ion-list>
+                  <ion-item *ngFor="let item of filteredItems ">
+                    <ion-label color="black">{{item.product}}</ion-label>
+                    <ion-input type="number" text-right value="{{item.amount}}" readonly></ion-input>
+                  </ion-item>
+                </ion-list>
                 <ion-item>
                   <ion-label>Ophaal tijdstip</ion-label>
                   <ion-datetime displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="2019-04-26T10:00:00.000Z"></ion-datetime>
@@ -97,45 +105,19 @@
                 </ion-label>
               </ion-item>
             
-              <ion-grid>
-                <ion-row>
-                  <ion-col col-3></ion-col>
-                  <ion-col col-6>
-                    <ion-button size="medium" href="members/home" expand="block">Sluiten</ion-button>
-                  </ion-col>
-                  <ion-col col-3></ion-col>
-                </ion-row>
-              </ion-grid>
+              <!--<ion-grid>-->
+                <!--<ion-row>-->
+                  <!--<ion-col col-3></ion-col>-->
+                  <!--<ion-col col-6>-->
+                    <!--<ion-button size="medium" href="members/home" expand="block">Sluiten</ion-button>-->
+                  <!--</ion-col>-->
+                  <!--<ion-col col-3></ion-col>-->
+                <!--</ion-row>-->
+              <!--</ion-grid>-->
         </ion-list>
       </div>
         </ion-col>
     </ion-row>
-    <!-- <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
 
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
-        <ion-virtual-scroll
-          [items]="listedLoadedPlaces"
-          approxItemHeight="70px"
-        >
-          <ion-item
-            [routerLink]="['/', 'places', 'tabs', 'discover', place.id]"
-            detail
-            *virtualItem="let place"
-          >
-            <ion-thumbnail slot="start">
-              <ion-img [src]="place.imageUrl"></ion-img>
-            </ion-thumbnail>
-            <ion-label>
-              <h2>{{ place.title }}</h2>
-              <p>{{ place.description }}</p>
-            </ion-label>
-          </ion-item>
-        </ion-virtual-scroll>
-      </ion-col>
-    </ion-row> -->
   </ion-grid>
 </ion-content>

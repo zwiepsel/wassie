@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { SegmentChangeEventDetail } from '@ionic/core';
 
-import { PlacesService } from '../places.service';
-
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Router, NavigationEnd } from '@angular/router';
+import {Router, NavigationEnd, ActivatedRoute, NavigationExtras} from '@angular/router';
 import { AmountsService } from 'src/app/services/amounts.service';
 
 @Component({
@@ -14,36 +12,42 @@ import { AmountsService } from 'src/app/services/amounts.service';
   styleUrls: ['./dashboard.page.scss']
 })
 export class dashboardPage implements OnInit {
-  
   public pickupForm: FormGroup;
   public pickup = true;
   public chosenAmounts = [];
+  public items = [];
+  public filteredItems = [];
+  public hideAmounts = false;
 
   constructor(
     private menuCtrl: MenuController,
     private formBuilder: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private amountsService: AmountsService
   ) {
+    this.route.queryParams.subscribe(() => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.items = this.router.getCurrentNavigation().extras.state.items;
+        this.filteredItems = this.items.filter((item) => {
+          return item.amount > 0;
+        });
+      }
+    });
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
        this.chosenAmounts = this.amountsService.amounts;
-       console.log(this.chosenAmounts)
       }
 
     });
-  
     this.pickupForm = formBuilder.group({
-      pickupDate: [new Date().toISOString()]
+      pickupDate: [new Date().toISOString()],
+      type: 'string'
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
 
-  }
-
-  onOpenMenu() {
-    this.menuCtrl.toggle();
   }
 
   onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
@@ -54,7 +58,16 @@ export class dashboardPage implements OnInit {
       this.router.navigateByUrl('deliveryDetails');
   }
 
-  chooseAmounts(){
-    this.router.navigateByUrl('amounts');
+  changeType() {
+    this.hideAmounts = this.pickupForm.controls.type.value !== 'Pieces';
+  }
+
+  chooseAmounts() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        newItems: this.items
+      }
+    };
+    this.router.navigate(['amounts'], navigationExtras);
   }
 }

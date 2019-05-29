@@ -25,4 +25,4 @@ const routes: Routes = [
   ],
   declarations: [dashboardPage]
 })
-export class dashboardPageModule {}
+export class DashboardPageModule {}
