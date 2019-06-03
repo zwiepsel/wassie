@@ -24,7 +24,7 @@
         <span text-right class="amount-header-right">Aantal</span></ion-list-header> 
       <ion-item *ngFor="let item of filteredItems">
               <ion-label color="black">{{item.product}}</ion-label>
-              <ion-input type="number" text-right placeholder="0" [(ngModel)]="item.amount"></ion-input>
+              <ion-input type="tel" inputmode="numeric" pattern="[0-9]*" text-right placeholder="0" [(ngModel)]="item.amount"></ion-input>
       </ion-item>
     </ion-list>
   </div>

@@ -12,22 +12,25 @@
     <ion-list-header>Aflever order {{id}} -  27/04/2019</ion-list-header>
     <ion-item>
         <ion-label>Lokatie</ion-label>
-
+      <ion-select value="{{form.location}}"  placeholder="Kies...">
+        <ion-select-option value="1">Locatie 1</ion-select-option>
+        <ion-select-option value="2">Locatie 2</ion-select-option>
+      </ion-select>
       </ion-item>
-      <ion-item *ngIf="type === 'Pieces'">
+      <ion-item *ngIf="form.type === 'Pieces'">
         <ion-label>
           <h2>Aantallen</h2>
         </ion-label>
       </ion-item>
-      <ion-item *ngIf="type === 'Kilo'">
+      <ion-item *ngIf="form.type === 'Kilo'">
         <ion-label color="black">Aantal kilo's</ion-label>
-        <ion-input type="number" text-right placeholder="0"></ion-input>
+        <ion-input type="number" text-right placeholder="0" value="{{form.amount}}" readonly></ion-input>
       </ion-item>
-      <ion-item *ngIf="type === 'Bags'">
+      <ion-item *ngIf="form.type === 'Bags'">
         <ion-label color="black">Aantal waszakken</ion-label>
-        <ion-input type="number" text-right placeholder="0"></ion-input>
+        <ion-input type="number" text-right placeholder="0" value="{{form.amount}}" readonly></ion-input>
       </ion-item>
-      <ion-list *ngIf="type === 'Pieces'">
+      <ion-list *ngIf="form.type === 'Pieces'">
         <ion-item *ngFor="let item of filteredItems ">
           <ion-label color="black">{{item.product}}</ion-label>
           <ion-input type="number" text-right value="{{item.amount}}" readonly></ion-input>
@@ -35,15 +38,15 @@
       </ion-list>
       <ion-item>
         <ion-label>Ophaal tijdstip</ion-label>
-        <ion-datetime displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="2019-04-26T10:00:00.000Z"></ion-datetime>
+        <ion-datetime displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="{{form.pickupDate}}" readonly></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-label>Aflever tijdstip</ion-label>
-        <ion-datetime displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="2019-04-26T10:00:00.000Z"></ion-datetime>
+        <ion-datetime displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="{{form.deliverDate}}" readonly></ion-datetime>
       </ion-item>
       <!-- Textarea in an item with a placeholder -->
       <ion-item>
-        <ion-textarea rows="4" placeholder="Voeg extra informatie toe..."></ion-textarea>
+        <ion-textarea rows="4" value="{{form.remarks}}" readonly></ion-textarea>
       </ion-item>
     <ion-item>
 

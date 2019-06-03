@@ -47,7 +47,9 @@ const routes: Routes = [
     redirectTo: '/places/tabs/dashboard',
     pathMatch: 'full'
   },
-  { path: 'invoices', loadChildren: './dashboard/invoices/invoices.module#InvoicesPageModule' }
+  { path: 'invoices', loadChildren: './dashboard/invoices/invoices.module#InvoicesPageModule' },
+  { path: 'rma', loadChildren: './dashboard/rma/rma.module#RmaPageModule' },
+  { path: 'account', loadChildren: './dashboard/account/account.module#AccountPageModule' }
 ];
 
 @NgModule({

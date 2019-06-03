@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Mijn afspraken</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-content padding>
+    <ion-segment (ionChange)="onFilterUpdate($event)">
+      <ion-segment-button value="pickup" checked>Afhalen</ion-segment-button>
+      <ion-segment-button value="delivery">Afleveren</ion-segment-button>
+    </ion-segment>
+    <div *ngIf="this.pickup">
+      <ion-list>
+        <ion-item lines="full"  *ngFor="let item of savedOrders"  (click)="openOrder(item.id)" detail>
+          <ion-datetime value="{{item.date}}" text-left displayFormat="D MMM YYYY H:mm" min="2019" max="2025" readonly></ion-datetime>
+          <ion-label text-right>
+            Order {{item.id}}
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf="!this.pickup">
+      <ion-list>
+        <ion-item lines="full"  (click)="openOrder(item.id)" detail>
+          <ion-datetime  text-left displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="{{today}}" readonly></ion-datetime>
+          <ion-label text-right>
+            Order 1234
+          </ion-label>
+        </ion-item>
+        <ion-item lines="full"  (click)="openOrder(item.id)" detail>
+          <ion-datetime  text-left displayFormat="D MMM YYYY H:mm" min="2019" max="2025" value="{{today}}" readonly></ion-datetime>
+          <ion-label text-right>
+            Order 3456
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+</ion-content>

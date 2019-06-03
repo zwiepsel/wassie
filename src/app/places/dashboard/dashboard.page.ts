@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ToastController } from '@ionic/angular';
 import { SegmentChangeEventDetail } from '@ionic/core';
 
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -28,7 +28,8 @@ export class dashboardPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private amountsService: AmountsService,
-    private storage: Storage
+    private storage: Storage,
+    public toastController: ToastController
   ) {
     this.route.queryParams.subscribe(() => {
       if (this.router.getCurrentNavigation().extras.state) {
@@ -46,33 +47,75 @@ export class dashboardPage implements OnInit {
     });
     this.pickupForm = formBuilder.group({
       pickupDate: [new Date().toISOString()],
-      type: 'string'
+      deliverDate: [new Date().toISOString()],
+      type: 'Pieces',
+      remarks: '',
+      location: '',
+      amount: 0
     });
   }
 
-  ngOnInit() {
+  async deleteOrder(id) {
+    const toast = await this.toastController.create({
+      message: `Order ${id} verwijderd`,
+      duration: 2000
+    });
+    toast.present();
+  }
 
+  async saveOrder() {
+    const toast = await this.toastController.create({
+      message: `Uw order is succesvol geplaatst`,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  ngOnInit() {
     this.storage.forEach(val => {
       this.savedOrders.push(val);
-    })
+    });
   }
 
   onFilterUpdate(event: CustomEvent<SegmentChangeEventDetail>) {
     event.detail.value === 'pickup' ? this.pickup = true : this.pickup = false;
   }
 
-  openOrder(id) {
+  openOrder(id, event) {
+    if(event.target.nodeName !== 'ION-BUTTON'){
       this.router.navigate( ['/deliveryDetails'], { queryParams: { id } });
+    }
+
   }
 
-  sendDelivery(){
+  removeDelivery(id, event) {
+    if (event.target.nodeName === 'ION-BUTTON') {
+      this.storage.remove(id);
+      const index = this.savedOrders.findIndex(function(item){
+        return item.id === id;
+      });
+      if (index !== -1) {
+        this.savedOrders.splice(index, 1);
+      }
+      this.deleteOrder(id);
+    }
+  }
+
+  sendDelivery() {
+    // this.storage.clear();
+    const activeDate = new Date().toISOString();
     const orderNumber = Math.floor((Math.random() * 10000) + 1).toString();
-    this.itemsSet = { id: orderNumber, items: this.items }
-    this.savedOrders.push(this.itemsSet)
-    this.storage.set(orderNumber, this.itemsSet)
+    this.itemsSet = { id: orderNumber, items: this.items, date: activeDate,  form: this.pickupForm.value };
+    this.savedOrders.push(this.itemsSet);
+    this.storage.set(orderNumber, this.itemsSet);
     this.pickupForm.controls.type.setValue('Pieces');
+    this.pickupForm.controls.deliverDate.setValue(new Date().toISOString());
+    this.pickupForm.controls.pickupDate.setValue(new Date().toISOString());
+    this.pickupForm.controls.remarks.setValue('');
+    this.pickupForm.controls.location.setValue('');
     this.filteredItems = [];
     this.items = [];
+    this.saveOrder();
   }
 
   changeType() {

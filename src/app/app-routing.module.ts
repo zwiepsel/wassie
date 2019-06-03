@@ -21,6 +21,14 @@ const routes: Routes = [
     loadChildren: './places/dashboard/delivery-details/delivery-details.module#DeliveryDetailsPageModule'
   },
   {
+    path: 'rma',
+    loadChildren: './places/dashboard/rma/rma.module#RmaPageModule'
+  },
+  {
+    path: 'account',
+    loadChildren: './places/dashboard/account/account.module#AccountPageModule'
+  },
+  {
     path: 'amounts',
     children: [
       {

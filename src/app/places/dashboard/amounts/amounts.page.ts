@@ -24,7 +24,6 @@ export class AmountsPage implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private storage: Storage) {
-      this.keyboard = Keyboard;
       this.initializeItems();
       this.route.queryParams.subscribe(params => {
         if (this.router.getCurrentNavigation().extras.state) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
-import { Storage } from "@ionic/storage";
+import { Router, ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-delivery-details',
@@ -10,29 +10,31 @@ import { Storage } from "@ionic/storage";
 export class DeliveryDetailsPage implements OnInit {
   public id = '';
   public activeOrder = [];
-  public type ='Pieces';
+  public type = 'Pieces';
   public filteredItems = [];
+  public form = {};
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private storage: Storage) { }
 
   ngOnInit() {
-
     this.route.queryParams.subscribe(params => {
       this.id = params.id;
-    })
+    });
     this.storage.get(this.id).then((val) => {
-      this.activeOrder = val.items;
-      this.filteredItems = this.activeOrder.filter((item) => {
+      this.activeOrder = val;
+      const items = val.items
+      this.filteredItems = items.filter((item) => {
         return item.amount > 0;
       });
-      console.log(this.activeOrder)
-    })
+      this.form = val.form;
+      console.log(val.form)
+    });
   }
 
   requestRMA() {
-      this.router.navigateByUrl('/members/rma');
+      this.router.navigateByUrl('rma');
   }
 
 
