@@ -10,7 +10,7 @@
 <ion-content padding>
   <ion-segment (ionChange)="onFilterUpdate($event)">
     <ion-segment-button value="pickup" checked>Afhalen</ion-segment-button>
-    <ion-segment-button value="delivery">Afleveren</ion-segment-button>
+    <ion-segment-button value="delivery">Gepland</ion-segment-button>
   </ion-segment>
   <ion-grid>
     <ion-row>
@@ -35,18 +35,22 @@
                     <ion-select-option value="Bags">Waszakken</ion-select-option>
                   </ion-select>
                 </ion-item>
-                <ion-item *ngIf="!hideAmounts">
+                <ion-item *ngIf="type === 'Pieces'">
                   <ion-label>
                     <h2>Aantallen</h2>
                     <p>kies de aantallen die u wilt laten ophalen </p>
                   </ion-label>
                   <ion-button (click)="chooseAmounts()"  fill="outline" slot="end">Kies</ion-button>
                 </ion-item>
-                <ion-item *ngIf="hideAmounts">
+                <ion-item *ngIf="type === 'Kilo'">
                   <ion-label color="black">Aantal kilo's</ion-label>
                   <ion-input type="number" text-right placeholder="0"></ion-input>
                 </ion-item>
-                <ion-list>
+                <ion-item *ngIf="type === 'Bags'">
+                  <ion-label color="black">Aantal waszakken</ion-label>
+                  <ion-input type="number" text-right placeholder="0"></ion-input>
+                </ion-item>
+                <ion-list *ngIf="type === 'Pieces'">
                   <ion-item *ngFor="let item of filteredItems ">
                     <ion-label color="black">{{item.product}}</ion-label>
                     <ion-input type="number" text-right value="{{item.amount}}" readonly></ion-input>
@@ -69,7 +73,7 @@
                   <ion-row>
                     <ion-col col-3></ion-col>
                     <ion-col col-6>
-                      <ion-button size="medium" href="members/home" expand="block">Opslaan</ion-button>
+                      <ion-button size="medium" (click)="sendDelivery()" expand="block">Versturen</ion-button>
                     </ion-col>
                     <ion-col col-3></ion-col>
                   </ion-row>
@@ -79,8 +83,17 @@
       </div>
       <div *ngIf="!this.pickup">
         <ion-list>
-            <ion-list-header color="primary">Ophaal afspraken</ion-list-header>
-            <ion-item lines="full" (click)="buttonClick()" detail>
+            <ion-list-header color="primary">Afspraken</ion-list-header>
+            <ion-item lines="full"  *ngFor="let item of savedOrders"  (click)="openOrder(item.id)" detail>
+                <ion-label>
+                  27-04-2019  
+                </ion-label>
+                <ion-label>
+                    Order {{item.id}} 
+                </ion-label>
+            </ion-item>
+          </ion-list>
+            <!-- <ion-item lines="full" (click)="buttonClick()" detail>
                 <ion-label>
                   27-04-2019  
                 </ion-label>
@@ -103,7 +116,7 @@
                 <ion-label>
                     Aflever order 3502
                 </ion-label>
-              </ion-item>
+              </ion-item> -->
             
               <!--<ion-grid>-->
                 <!--<ion-row>-->
@@ -114,7 +127,6 @@
                   <!--<ion-col col-3></ion-col>-->
                 <!--</ion-row>-->
               <!--</ion-grid>-->
-        </ion-list>
       </div>
         </ion-col>
     </ion-row>

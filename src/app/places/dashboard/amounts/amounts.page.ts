@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SegmentChangeEventDetail } from '@ionic/core';
 import { Item } from 'src/app/models/item.model';
 import {ActivatedRoute, NavigationExtras, Router} from '@angular/router';
+import { Storage } from '@ionic/storage';
 
 declare var Keyboard:any;
 
@@ -21,7 +22,8 @@ export class AmountsPage implements OnInit {
   public activeCategorie = '';
 
   constructor(private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private storage: Storage) {
       this.keyboard = Keyboard;
       this.initializeItems();
       this.route.queryParams.subscribe(params => {
@@ -119,7 +121,7 @@ export class AmountsPage implements OnInit {
         items: this.items
       }
     };
-    console.log(this.items)
+
     this.router.navigate(['dashboard'], navigationExtras);
   }
 
